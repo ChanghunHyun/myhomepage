@@ -1,0 +1,10 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /guestbook/{document} {
+      // 방명록은 누구나 읽기, 쓰기(등록/수정/삭제)가 가능하도록 규칙을 설정합니다.
+      // (삭제/수정 시의 비밀번호 일치 검증은 클라이언트 JS 단에서 처리합니다)
+      allow read, write: if true;
+    }
+  }
+}

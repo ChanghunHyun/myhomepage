@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="현창훈 교수님 홈페이지 방명록입니다." />
+  <title>방명록 — 현창훈 교수</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* 방명록 페이지 전용 스타일 오버라이드 및 추가 */
+    .guestbook-container {
+      display: grid;
+      grid-template-columns: 1.8fr 1.2fr;
+      gap: 2.5rem;
+      align-items: start;
+      margin-top: 120px;
+      margin-bottom: 80px;
+    }
+
+    .guestbook-list-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      min-height: 400px;
+      max-height: 700px;
+      overflow-y: auto;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .guestbook-form-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-card);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      position: sticky;
+      top: 100px;
+    }
+
+    /* 방명록 카드 스타일 */
+    .guestbook-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 1.2rem;
+      margin-bottom: 1.2rem;
+      position: relative;
+      transition: var(--transition);
+    }
+
+    .guestbook-card:hover {
+      border-color: var(--border-glow);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .guestbook-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.8rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      padding-bottom: 0.4rem;
+    }
+
+    .guestbook-author {
+      font-weight: 700;
+      color: var(--accent-2);
+      font-size: 1rem;
+    }
+
+    .guestbook-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .guestbook-message {
+      font-size: 0.92rem;
+      line-height: 1.6;
+      color: var(--text-primary);
+      white-space: pre-line;
+    }
+
+    .guestbook-actions {
+      display: flex;
+      gap: 0.8rem;
+      justify-content: flex-end;
+      margin-top: 0.8rem;
+    }
+
+    .action-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 0.2rem;
+    }
+
+    .action-btn:hover {
+      color: var(--accent-1);
+    }
+
+    .action-btn.delete:hover {
+      color: var(--accent-3);
+    }
+
+    /* 방명록 작성 폼 */
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 0.5rem;
+    }
+
+    .form-control {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.8rem 1rem;
+      color: var(--text-primary);
+      font-family: var(--font-kr);
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent-2);
+      box-shadow: 0 0 10px rgba(62, 207, 207, 0.2);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    textarea.form-control {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    /* 관리자 모달 */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: var(--transition);
+      z-index: 2000;
+    }
+
+    .modal.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      width: 90%;
+      max-width: 400px;
+      box-shadow: var(--shadow-card);
+      position: relative;
+    }
+
+    .modal-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-primary);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      color: var(--text-primary);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .guestbook-container {
+        grid-template-columns: 1fr;
+      }
+      .guestbook-form-section {
+        position: static;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================================================
+       NAVIGATION
+       ================================================ -->
+  <nav class="navbar scrolled" id="navbar" role="navigation" aria-label="메인 네비게이션">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="홈으로">현창훈</a>
+      <ul class="nav-links" id="navLinks" role="list">
+        <li><a href="index.html#hero"     aria-label="소개 섹션">소개</a></li>
+        <li><a href="index.html#youtube"  aria-label="유튜브 섹션">영상</a></li>
+        <li><a href="index.html#gallery"  aria-label="갤러리 섹션">갤러리</a></li>
+        <li><a href="guestbook.html"      aria-label="방명록 페이지" style="color: var(--accent-2); font-weight: 700;">📝 방명록 남기기</a></li>
+        <li><a href="index.html#timeline" aria-label="경력/학력 섹션">경력/학력</a></li>
+        <li><a href="index.html#footer"   aria-label="연락처 섹션">연락처</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ================================================
+       MAIN GUESTBOOK CONTENT
+       ================================================ -->
+  <main class="container">
+    <div class="guestbook-container">
+      
+      <!-- 방명록 리스트 섹션 -->
+      <section class="guestbook-list-section">
+        <h2 style="font-size: 1.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>💬</span> 방명록 목록
+        </h2>
+        <div id="guestbookList">
+          <!-- 로딩 상태 표시 -->
+          <div style="text-align: center; color: var(--text-muted); padding: 3rem 0;">
+            방명록을 불러오는 중입니다...
+          </div>
+        </div>
+      </section>
+
+      <!-- 방명록 남기기 입력 폼 섹션 (리스트의 오른쪽 아래 배치 형태) -->
+      <section class="guestbook-form-section">
+        <h2 style="font-size: 1.3rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+          <span>✏️</span> 방명록 남기기
+        </h2>
+        <form id="guestbookForm">
+          <div class="form-group">
+            <label for="nickname">방문자 이름 (닉네임)</label>
+            <input type="text" id="nickname" class="form-control" placeholder="이름을 입력해주세요" required maxlength="15" />
+          </div>
+          <div class="form-group">
+            <label for="message">전달할 말</label>
+            <textarea id="message" class="form-control" placeholder="교수님께 전할 따뜻한 한마디를 남겨주세요" required maxlength="500"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+            ✨ 방명록 등록하기
+          </button>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ================================================
+       FOOTER
+       ================================================ -->
+  <footer id="footer" aria-label="연락처 및 푸터">
+    <div class="container footer-content">
+      <div class="footer-logo">현창훈</div>
+      <p class="footer-tagline">언제든지 연락 주세요. 반갑게 대화 나누겠습니다.</p>
+      <div class="footer-email-section">
+        <p class="footer-email-label">EMAIL</p>
+        <a href="mailto:chhyun@scnu.ac.kr" class="footer-email-link">
+          <span>✉️</span>
+          <span>chhyun@scnu.ac.kr</span>
+        </a>
+      </div>
+      <div class="footer-divider" aria-hidden="true"></div>
+      <p class="footer-copy">© 2026 현창훈. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ================================================
+       ADMIN MODALS (관리자 비밀번호 확인)
+       ================================================ -->
+  <!-- 삭제 모달 -->
+  <div class="modal" id="deleteModal" role="dialog" aria-modal="true">
+    <div class="modal-content">
+      <button class="modal-close" id="closeDeleteModal">&times;</button>
+      <h3 class="modal-title">🗑️ 게시물 삭제</h3>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+        이 게시물을 삭제하려면 관리자 비밀번호를 입력하세요.
+      </p>
+      <div class="form-group">
+        <input type="password" id="deletePassword" class="form-control" placeholder="관리자 비밀번호" required />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" id="cancelDeleteBtn" style="padding: 0.5rem 1rem;">취소</button>
+        <button class="btn btn-primary" id="confirmDeleteBtn" style="padding: 0.5rem 1rem; background: var(--accent-3); box-shadow: 0 4px 20px rgba(255,101,132,0.4);">삭제</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 수정 모달 -->
+  <div class="modal" id="editModal" role="dialog" aria-modal="true">
+    <div class="modal-content" style="max-width: 450px;">
+      <button class="modal-close" id="closeEditModal">&times;</button>
+      <h3 class="modal-title">✏️ 게시물 수정</h3>
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1rem;">
+        내용을 수정하고 관리자 비밀번호를 입력하세요.
+      </p>
+      <div class="form-group">
+        <label for="editNickname">방문자 이름</label>
+        <input type="text" id="editNickname" class="form-control" required maxlength="15" />
+      </div>
+      <div class="form-group">
+        <label for="editMessage">전달할 말</label>
+        <textarea id="editMessage" class="form-control" required maxlength="500"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="editPassword">관리자 비밀번호</label>
+        <input type="password" id="editPassword" class="form-control" placeholder="비밀번호 입력" required />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" id="cancelEditBtn" style="padding: 0.5rem 1rem;">취소</button>
+        <button class="btn btn-primary" id="confirmEditBtn" style="padding: 0.5rem 1rem;">수정 완료</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase 및 애플리케이션 스크립트 -->
+  <script type="module" src="guestbook.js"></script>
+
+</body>
+</html>
