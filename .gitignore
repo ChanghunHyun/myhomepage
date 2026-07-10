@@ -1,0 +1,14 @@
+# Firebase
+.firebase/
+firebase-debug.log
+
+# 로컬 실행 파일
+*.bat
+
+# OS 파일
+.DS_Store
+Thumbs.db
+
+# 에디터
+.vscode/
+*.swp

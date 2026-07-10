@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="안녕하세요. 순천대학교 컴퓨터공학과 조교수 현창훈입니다." />
+  <meta name="keywords" content="현창훈, 순천대학교, 조교수, 컴퓨터공학, 포트폴리오" />
+  <meta property="og:title" content="현창훈 — 순천대학교 조교수" />
+  <meta property="og:description" content="순천대학교 컴퓨터공학과 조교수 현창훈의 자기소개 페이지입니다." />
+  <meta property="og:type" content="website" />
+  <title>현창훈 — 순천대학교 조교수</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ================================================
+       NAVIGATION
+       ================================================ -->
+  <nav class="navbar" id="navbar" role="navigation" aria-label="메인 네비게이션">
+    <div class="container nav-inner">
+      <!-- 로고: 이름 이니셜로 변경 가능 -->
+      <a href="#hero" class="nav-logo" aria-label="홈으로">GD.</a>
+      <ul class="nav-links" id="navLinks" role="list">
+        <li><a href="#hero"     aria-label="소개 섹션">소개</a></li>
+        <li><a href="#youtube"  aria-label="유튜브 섹션">영상</a></li>
+        <li><a href="#gallery"  aria-label="갤러리 섹션">갤러리</a></li>
+        <li><a href="#timeline" aria-label="경력/학력 섹션">경력/학력</a></li>
+        <li><a href="#footer"   aria-label="연락처 섹션">연락처</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기/닫기" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ================================================
+       HERO SECTION
+       ================================================ -->
+  <section id="hero" aria-label="소개">
+    <!-- 배경 오브 -->
+    <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+    <div class="hero-orb hero-orb-3" aria-hidden="true"></div>
+
+    <div class="hero-content">
+      <!-- 뱃지: 현재 상태 / 직책 등으로 변경 가능 -->
+      <div class="hero-badge">🚀 &nbsp;현재 활발히 활동 중입니다</div>
+
+      <!-- 이름: script.js 에서 SITE_CONFIG.name 수정 -->
+      <h1 class="hero-name">
+        안녕하세요,<br />
+        <span class="highlight" id="heroName">홍길동</span>입니다
+      </h1>
+
+      <!-- 직함: script.js 에서 SITE_CONFIG.title 수정 -->
+      <p class="hero-title" id="heroTitle">소프트웨어 개발자 &amp; 콘텐츠 크리에이터</p>
+
+      <!-- 타이핑 효과 -->
+      <div class="hero-typing-wrapper" aria-live="polite">
+        저는 <span class="typed-text" id="typedText"></span><span class="cursor" aria-hidden="true"></span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#timeline" class="btn btn-primary" id="btnCareer">
+          📋 경력 보기
+        </a>
+        <a href="#footer" class="btn btn-outline" id="btnContact">
+          ✉️ 연락하기
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll-hint" aria-hidden="true">
+      <div class="scroll-mouse"></div>
+      <span>SCROLL</span>
+    </div>
+  </section>
+
+  <!-- ================================================
+       YOUTUBE SECTION
+       ================================================ -->
+  <section id="youtube" aria-label="유튜브 영상">
+    <div class="container">
+      <h2 class="section-title reveal">📺 영상 콘텐츠</h2>
+      <p class="section-subtitle reveal">제가 제작한 유튜브 영상들을 소개합니다</p>
+
+      <!-- file:// 접속 시 안내 배너 (http://에서는 자동 숨김) -->
+      <div id="fileBanner" class="file-banner" style="display:none">
+        <span>🚨</span>
+        <div>
+          <strong>유튜브 영상이 차단되었습니다</strong><br>
+          <small>로컈 파일로 열면 YouTube가 재생을 차단합니다. 아래 방법으로 한 번만 실행해주세요:</small>
+        </div>
+        <div class="file-banner-steps">
+          <span class="step">① <code>홈페이지열기.bat</code> 더블클릭</span>
+          <span class="step">② 브라우저가 자동으로 열림</span>
+          <span class="step">③ YouTube 내재 수진!</span>
+        </div>
+      </div>
+
+      <div class="youtube-grid" id="youtubeGrid">
+        <!-- JavaScript로 동적 생성 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       GALLERY SECTION
+       ================================================ -->
+  <section id="gallery" aria-label="사진 갤러리">
+    <div class="container">
+      <h2 class="section-title reveal">🖼️ 포토 갤러리</h2>
+      <p class="section-subtitle reveal">소중한 순간들을 담았습니다</p>
+
+      <!-- 갤러리 그리드: script.js의 SITE_CONFIG.gallery 에서 수정 -->
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- JavaScript로 동적 생성 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       TIMELINE SECTION
+       ================================================ -->
+  <section id="timeline" aria-label="경력 및 학력">
+    <div class="container">
+      <h2 class="section-title reveal">📅 경력 &amp; 학력</h2>
+      <p class="section-subtitle reveal">지금까지 걸어온 저의 여정입니다</p>
+
+      <!-- 필터 버튼 -->
+      <div class="timeline-filters" role="tablist" aria-label="타임라인 필터">
+        <button class="filter-btn active" data-filter="all"       id="filterAll"       role="tab" aria-selected="true">전체</button>
+        <button class="filter-btn"        data-filter="career"    id="filterCareer"    role="tab" aria-selected="false">💼 경력</button>
+        <button class="filter-btn"        data-filter="education" id="filterEducation" role="tab" aria-selected="false">🎓 학력</button>
+        <button class="filter-btn"        data-filter="award"     id="filterAward"     role="tab" aria-selected="false">🏆 수상</button>
+      </div>
+
+      <!-- 타임라인 아이템: script.js의 SITE_CONFIG.timeline 에서 수정 -->
+      <div class="timeline-wrapper" id="timelineWrapper">
+        <!-- JavaScript로 동적 생성 -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================
+       FOOTER
+       ================================================ -->
+  <footer id="footer" aria-label="연락처 및 푸터">
+    <div class="footer-orb" aria-hidden="true"></div>
+    <div class="container footer-content">
+
+      <!-- 로고: script.js에서 SITE_CONFIG.name 수정 -->
+      <div class="footer-logo" id="footerLogo">GD.</div>
+      <p class="footer-tagline" id="footerTagline">언제든지 연락 주세요. 반갑게 대화 나누겠습니다.</p>
+
+      <!-- 이메일: script.js의 SITE_CONFIG.email 에서 수정 -->
+      <div class="footer-email-section">
+        <p class="footer-email-label">EMAIL</p>
+        <a href="mailto:chhyun@scnu.ac.kr" class="footer-email-link" id="footerEmailLink" aria-label="이메일 보내기">
+          <span>✉️</span>
+          <span id="footerEmailText">chhyun@scnu.ac.kr</span>
+        </a>
+      </div>
+
+      <!-- 소셜 링크: script.js의 SITE_CONFIG.socials 에서 수정 -->
+      <div class="footer-social" id="footerSocial">
+        <!-- JavaScript로 동적 생성 -->
+      </div>
+
+      <div class="footer-divider" aria-hidden="true"></div>
+      <p class="footer-copy" id="footerCopy">© 2024 홍길동. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ── 라이트박스 ── -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="이미지 뷰어">
+    <button class="lightbox-nav lightbox-prev" id="lightboxPrev" aria-label="이전 이미지">&#8249;</button>
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose" aria-label="닫기">&#10005;</button>
+      <img src="" alt="" id="lightboxImg" />
+      <p class="lightbox-caption" id="lightboxCaption"></p>
+    </div>
+    <button class="lightbox-nav lightbox-next" id="lightboxNext" aria-label="다음 이미지">&#8250;</button>
+    <div class="lightbox-counter" id="lightboxCounter" aria-live="polite"></div>
+  </div>
+
+  <!-- ── Back to Top ── -->
+  <button class="back-to-top" id="backToTop" aria-label="페이지 상단으로 이동">&#8679;</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
