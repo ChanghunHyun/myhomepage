@@ -29,18 +29,13 @@ const db = getFirestore(app);
 const guestbookCol = collection(db, "guestbook");
 
 // ── 관리자 비밀번호 설정 ──
-// 기본값: admin1234 (아래 해시값은 'admin1234'의 SHA-256 해시입니다)
-// 비밀번호를 변경하려면 원하는 비밀번호의 SHA-256 해시값으로 아래 값을 대체하세요.
-const ADMIN_PASSWORD_HASH = "c7ad44cbad762a5da0a452f9e854fdc1e0e7a52a38015f23f3eab1d80b931dd4";
+// 기본값: admin1234
+// 비밀번호를 변경하려면 아래 문자열을 직접 수정하세요.
+const ADMIN_PASSWORD = "admin1234";
 
-// SHA-256 해싱 헬퍼 함수
+// 비밀번호 검증 함수 (호출부와의 호환성을 위해 async 유지)
 async function verifyPassword(inputPassword) {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(inputPassword);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-  return hashHex === ADMIN_PASSWORD_HASH;
+  return inputPassword === ADMIN_PASSWORD;
 }
 
 // ── 상태 전역 변수 ──
